@@ -12,6 +12,7 @@ namespace Business.DTOs
         public string LastName { get; set; } = lastname;
         public string Email { get; set; } = email;
         public string Phone { get; set; } = phone;
+        public decimal Salary { get; set; }
         public int DepartmentId { get; set; } = deptId;
     }
 }

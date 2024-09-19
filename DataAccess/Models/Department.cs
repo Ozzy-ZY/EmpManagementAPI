@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace DataAccess.Models
+﻿namespace DataAccess.Models
 {
     public class Department
     {

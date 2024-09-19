@@ -13,8 +13,9 @@
         public  string Phone { get; set; }
 
         public  int ManagerId { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        public required virtual Employee Manager { get; set; }
-        public required virtual ICollection<Employee> Employees { get; set; }
+        public  virtual Employee Manager { get; set; }
+        public  virtual ICollection<Employee> Employees { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Business.DTOs;
+﻿using Business.DTOs.Employee;
 using DataAccess.Models;
 using DataAccess.Repo;
 using System;

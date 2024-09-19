@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.DTOs
+namespace Business.DTOs.Employee
 {
     public class EmployeeAddDTO(string firstname, string lastname, string email, string phone, int deptId)
     {

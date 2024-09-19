@@ -17,7 +17,7 @@ namespace DataAccess.Models.ModelConfig
             builder.Property(d => d.Description).HasMaxLength(500).IsRequired(false);
             builder.Property(d => d.Location).HasDefaultValue("New York");
             builder.Property(d => d.Phone).IsRequired().HasMaxLength(50);
-
+            builder.Property(d => d.CreatedAt).HasDefaultValueSql("GETDATE()");
             // One-to-One relationship with Manager (Employee)
             builder.HasOne(d => d.Manager)
                   .WithOne() // No navigation property from Employee to Manager

@@ -15,7 +15,10 @@
 
         public required string City { get; set; } = "New York";
 
+        public required decimal Salary { get; set; }
+
         public required DateTime JoinedAt { get; set; } = DateTime.Now;
+        public DateTime? ModifiedAt { get; set; }
 
         public required int DepartmentId { get; set; }
         public required virtual Department Department { get; set; }

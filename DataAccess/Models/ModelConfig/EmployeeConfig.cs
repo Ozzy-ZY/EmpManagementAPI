@@ -17,9 +17,14 @@ namespace DataAccess.Models.ModelConfig
             builder.Property(e => e.LName).IsRequired().HasMaxLength(100);
             builder.Property(e => e.Title).IsRequired().HasMaxLength(100);
             builder.Property(e => e.Email).IsRequired().HasMaxLength(150);
-            builder.Property(e => e.Phone).IsRequired().HasMaxLength(50);
+            builder.Property(e => e.Phone)
+                .IsRequired()
+                .HasMaxLength(50);
             builder .Property(e => e.City).HasDefaultValue("New York");
             builder.Property(e => e.JoinedAt).HasDefaultValueSql("GETDATE()");
+            builder.Property(e => e.ModifiedAt).IsRequired(false);
+            builder.Property(e => e.Salary).IsRequired()
+                .HasColumnType("Decimal(10,2)");
 
             // Foreign Key relationship with Department
             builder.HasOne(e => e.Department)

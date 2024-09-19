@@ -19,14 +19,14 @@ namespace DataAccess.Repo
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<bool> Add(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
             _dbSet.Add(entity);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var temp = await _dbSet.FindAsync(id);
             if(temp != null)
@@ -38,7 +38,7 @@ namespace DataAccess.Repo
             return false;
         }
 
-        public async Task<T> Get(int id, params string[] Includes)
+        public async Task<T> GetAsync(int id, params string[] Includes)
         {
             var temp = await _dbSet.FindAsync(id);
             if (temp != null)
@@ -47,7 +47,7 @@ namespace DataAccess.Repo
                 return null!;
         }
 
-        public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null, params string[] Includes)
+        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params string[] Includes)
         {
             IQueryable<T> query = _dbSet;
             if (filter != null)
@@ -61,7 +61,7 @@ namespace DataAccess.Repo
             return await query.ToListAsync();
         }
 
-        public async Task<bool> Update(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
             _dbSet.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;

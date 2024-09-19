@@ -13,10 +13,10 @@ namespace DataAccess.Repo
     public interface IRepo<T>
         where T : class
     {
-        public Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>>? filter = null, params string[] Includes);
-        public Task<T> Get(int id, params string[] Includes);
-        public Task<bool> Add(T entity);
-        public Task<bool> Update(T entity);
-        public Task<bool> Delete(int id);
+        public Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null, params string[] Includes);
+        public Task<T> GetAsync(int id, params string[] Includes);
+        public Task<bool> AddAsync(T entity);
+        public Task<bool> UpdateAsync(T entity);
+        public Task<bool> DeleteAsync(int id);
     }
 }

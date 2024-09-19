@@ -14,7 +14,7 @@ namespace DataAccess.Models.ModelConfig
         {
             builder.HasKey(d => d.Id); // Primary Key
             builder.Property(d => d.Name).IsRequired().HasMaxLength(100);
-            builder.Property(d => d.Description).IsRequired().HasMaxLength(500);
+            builder.Property(d => d.Description).HasMaxLength(500).IsRequired(false);
             builder.Property(d => d.Location).HasDefaultValue("New York");
             builder.Property(d => d.Phone).IsRequired().HasMaxLength(50);
 

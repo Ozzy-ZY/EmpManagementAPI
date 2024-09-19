@@ -12,24 +12,17 @@ namespace DataAccess.Models.ModelConfig
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
-            builder.HasKey(d => d.Id);
-            builder.Property(d => d.Id)
-                .UseIdentityColumn(1, 1);
-            builder.Property(d => d.Name)
-                .HasColumnType("VARCHAR(50)");
-            builder.Property(d => d.Description)
-                .HasColumnType("VARCHAR(150)");
+            builder.HasKey(d => d.Id); // Primary Key
+            builder.Property(d => d.Name).IsRequired().HasMaxLength(100);
+            builder.Property(d => d.Description).IsRequired().HasMaxLength(500);
+            builder.Property(d => d.Location).HasDefaultValue("New York");
+            builder.Property(d => d.Phone).IsRequired().HasMaxLength(50);
 
-            builder.HasMany(d => d.Employees)
-                .WithOne(e => e.Department)
-                .HasForeignKey(e => e.DepartmentId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+            // One-to-One relationship with Manager (Employee)
             builder.HasOne(d => d.Manager)
-                .WithOne(e => e.Department)
-                .HasForeignKey<Department>(d => d.ManagerId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+                  .WithOne() // No navigation property from Employee to Manager
+                  .HasForeignKey<Department>(d => d.ManagerId)
+                  .OnDelete(DeleteBehavior.Restrict); // Manager must not be deleted if the Department is deleted
         }
     }
 }

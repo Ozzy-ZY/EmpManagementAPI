@@ -12,27 +12,20 @@ namespace DataAccess.Models.ModelConfig
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id)
-                .UseIdentityColumn(1, 1);
+            builder.HasKey(e => e.Id); // Primary Key
+            builder.Property(e => e.FName).IsRequired().HasMaxLength(100);
+            builder.Property(e => e.LName).IsRequired().HasMaxLength(100);
+            builder.Property(e => e.Title).IsRequired().HasMaxLength(100);
+            builder.Property(e => e.Email).IsRequired().HasMaxLength(150);
+            builder.Property(e => e.Phone).IsRequired().HasMaxLength(50);
+            builder .Property(e => e.City).HasDefaultValue("New York");
+            builder.Property(e => e.JoinedAt).HasDefaultValueSql("GETDATE()");
 
+            // Foreign Key relationship with Department
             builder.HasOne(e => e.Department)
-                .WithMany(d => d.Employees)
-                .HasForeignKey(e => e.DepartmentId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Property(e => e.FName)
-                .HasColumnName("First_Name")
-                .HasColumnType("NVARCHAR(20");
-
-            builder.Property(e => e.LName)
-                .HasColumnName("Last_Name")
-                .HasColumnType("NVARCHAR(20)");
-
-            builder.Property(e => e.Title)
-                .HasColumnType("VarChar(50)");
-            builder.Property(e => e.JoinedAt)
-                .HasColumnType("DateTime");
+                  .WithMany(d => d.Employees)
+                  .HasForeignKey(e => e.DepartmentId)
+                  .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

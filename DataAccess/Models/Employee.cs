@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DataAccess.Models
+﻿namespace DataAccess.Models
 {
     public class Employee
     {
@@ -25,7 +19,6 @@ namespace DataAccess.Models
 
         public required int DepartmentId { get; set; }
         public required virtual Department Department { get; set; }
-
 
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Employee
 {
-    public class EmployeeGetDTO(string fullname, string title, string department)
+    public class EmployeeGetDTO(string fullname, string title, int departmentId)
     {
         public string FullName { get; set; } = fullname;
         public string Title { get; set; } = title;
-        public string DepartmentName { get; set; } = department;
+        public int DepartmentId{ get; set; } = departmentId;
     }
 }

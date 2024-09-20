@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Employee
 {
-    public class EmployeeAddDTO(string firstname, string lastname, string email, string phone, int deptId)
+    public class EmployeeAddDTO
     {
-        public string FirstName { get; set; } = firstname;
-        public string LastName { get; set; } = lastname;
-        public string Email { get; set; } = email;
-        public string Phone { get; set; } = phone;
+        public string FirstName { get; set; } 
+        public string LastName { get; set; } 
+        public string Email { get; set; }
+        public string Title { get; set; }
+        public string Phone { get; set; } 
         public decimal Salary { get; set; }
-        public int DepartmentId { get; set; } = deptId;
+        public int DepartmentId { get; set; } 
     }
 }

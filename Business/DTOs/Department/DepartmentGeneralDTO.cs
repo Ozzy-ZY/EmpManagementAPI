@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Department
 {
-    public record DepartmentGeneralDTO(string name, string phone, int managerId,  string description = null!, string location = null!)
+    public class DepartmentGeneralDTO
     {
+        public string Name { get; set; }
+        public string Phone { get; set; }
+        public int? ManagerId { get; set; } = 0;
+        public string Description { get; set; }
+        public string Location { get; set; }
     }
 }

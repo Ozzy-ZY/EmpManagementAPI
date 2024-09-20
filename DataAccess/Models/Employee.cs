@@ -16,11 +16,11 @@
         public  string City { get; set; } = "New York";
 
         public required decimal Salary { get; set; }
+        public required int DepartmentId { get; set; }
 
         public DateTime JoinedAt { get; set; } = DateTime.Now;
         public DateTime? ModifiedAt { get; set; }
 
-        public required int DepartmentId { get; set; }
         public virtual Department Department { get; set; }
 
     }

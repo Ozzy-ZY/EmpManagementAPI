@@ -10,26 +10,33 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    internal class DepartmentManager
+    public class DepartmentManager
     {
         private readonly IRepo<Department> _repo;
         public DepartmentManager(IRepo<Department> repo)
         {
             _repo = repo;
         }
+        public async Task<bool> AddDept(DepartmentGeneralDTO dto)
+        {
+            Department department = new Department()
+            {
+                Name = dto.Name,
+                Description = dto.Description,
+                ManagerId = dto.ManagerId,
+                Phone = dto.Phone,
+                Location = dto.Location,
+            };
+            return await _repo.AddAsync(department);
+        }
         public async Task<bool> UpdateDept(DepartmentGeneralDTO dto)
         {
-            var dept = new Department() { Name = dto.name, Description = dto.description, ManagerId = dto.managerId, };
-            if (await _repo.UpdateAsync(dept) == false)
-                return false;
-            return true;
-
+            var dept = new Department() { Name = dto.Name, Description = dto.Description, ManagerId = dto.ManagerId, };
+            return await _repo.UpdateAsync(dept) != false;
         }
         public async Task<bool> DeleteDept(int id)
         {
-            if (await _repo.DeleteAsync(id) == false)
-                return false;
-            return true;
+            return await _repo.DeleteAsync(id) != false;
         }
         public async Task<IEnumerable<DepartmentGeneralDTO>> GetAllDepts(Expression<Func<Department, bool>> filter)
         {
@@ -38,14 +45,28 @@ namespace Business.Services
             // string name, string phone, int managerId,  string description = null!, string location = null!
             foreach (var dept in deptlist)
             {
-                dtoList.Add(new DepartmentGeneralDTO(dept.Name, dept.Phone, dept.ManagerId, dept.Description, dept.Location));
+                var dep = new DepartmentGeneralDTO()
+                { Name = dept.Name,
+                    Phone =  dept.Phone,
+                    ManagerId = dept.ManagerId,
+                    Description = dept.Description,
+                    Location =  dept.Location 
+                };
+                dtoList.Add(dep);
             }
             return dtoList;
         }
         public async Task<DepartmentGeneralDTO> GetDept(int id)
         {
-            var temp = await _repo.GetAsync(id);
-            return new DepartmentGeneralDTO(temp.Name, temp.Phone, temp.ManagerId, temp.Description, temp.Location);
+            var dept = await _repo.GetAsync(id);
+            return new DepartmentGeneralDTO()
+            {
+                Name = dept.Name,
+                Phone = dept.Phone,
+                ManagerId = dept.ManagerId,
+                Description = dept.Description,
+                Location = dept.Location
+            };
         }
     }
 }

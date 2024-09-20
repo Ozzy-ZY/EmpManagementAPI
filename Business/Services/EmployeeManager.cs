@@ -17,23 +17,42 @@ namespace Business.Services
         public EmployeeManager(IRepo<Employee> repo) {
             _repo = repo;
         }
-        public void AddEmployee(EmployeeAddDTO dto)
+        public async Task<bool> AddEmployee(EmployeeAddDTO dto)
         {
             Employee emp = new Employee() {
-                FName = dto.FirstName, LName = dto.LastName,
+                FName = dto.FirstName,
+                LName = dto.LastName,
+                Title = dto.Title,
                 Phone = dto.Phone,
                 Email = dto.Email,
                 DepartmentId = dto.DepartmentId,
                 City = "NewYork",
                 Salary = dto.Salary};
+            return await _repo.AddAsync(emp) != false;
         }
-
+        public async Task<bool> UpdateEmployee(EmployeeUpdateDTO dto)
+        {
+            Employee emp = new Employee()
+            {
+                Id = dto.Id,
+                FName = dto.FirstName,
+                LName = dto.LastName,
+                Title = dto.Title,
+                Phone = dto.Phone,
+                Email = dto.Email,
+                DepartmentId = dto.DepartmentId,
+                City = "NewYork",
+                Salary = dto.Salary,
+                ModifiedAt = DateTime.Now,
+            };
+            return await _repo.UpdateAsync(emp) != false;
+        }
         public async Task<EmployeeGetDTO> GetEmployee(int id)
         {
-            var emp = await _repo.GetAsync(id);
+            var emp = await _repo.GetAsync(id,"Department");
             if (emp != null)
             {
-                return new EmployeeGetDTO($"{emp.FName} {emp.LName}", emp.Title, emp.Department.Name);
+                return new EmployeeGetDTO($"{emp.FName} {emp.LName}", emp.Title, emp.DepartmentId);
             }
 
             return null!;
@@ -52,10 +71,7 @@ namespace Business.Services
 
         public async Task<bool> DeleteEmployee(int id)
         {
-            if (await _repo.DeleteAsync(id) == false)
-                return false;
-
-            return true;
+            return await _repo.DeleteAsync(id) != false;
         }
 
     }

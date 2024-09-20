@@ -21,7 +21,7 @@ namespace DataAccess.Models.ModelConfig
             // One-to-One relationship with Manager (Employee)
             builder.HasOne(d => d.Manager)
                   .WithOne() // No navigation property from Employee to Manager
-                  .HasForeignKey<Department>(d => d.ManagerId)
+                  .HasForeignKey<Department>(d => d.ManagerId).IsRequired(false)
                   .OnDelete(DeleteBehavior.Restrict); // Manager must not be deleted if the Department is deleted
         }
     }

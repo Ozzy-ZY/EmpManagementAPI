@@ -12,7 +12,7 @@
 
         public  string Phone { get; set; }
 
-        public  int ManagerId { get; set; }
+        public  int? ManagerId { get; set; }
         public DateTime CreatedAt { get; set; }
 
         public  virtual Employee Manager { get; set; }

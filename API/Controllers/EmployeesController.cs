@@ -1,4 +1,4 @@
-﻿using Business.DTOs.Employee;
+﻿using DataAccess.DTOs.Employee;
 using Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,8 +21,13 @@ namespace API.Controllers
         {
             return Ok(await _employeeManager.GetEmployee(id));
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _employeeManager.GetAllEmployeesWithFilter());
+        }
         [HttpPost("AddEmployee/")]
-        public async Task<IActionResult> AddEmployee([FromBody] EmployeeAddDTO empDto)
+        public async Task<IActionResult> AddEmployee([FromBody] EmployeeGeneralDTO empDto)
         {
             if(await _employeeManager.AddEmployee(empDto))
                 return Ok();

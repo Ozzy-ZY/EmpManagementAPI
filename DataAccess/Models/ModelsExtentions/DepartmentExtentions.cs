@@ -17,20 +17,20 @@ namespace DataAccess.Models.ModelsExtentions
         public static Department AsModel(this DepartmentGeneralDTO dto, DtoOperation operation) => operation switch {
             DtoOperation.Create => new Department()
             {
-                Name = dto.Name,
-                Phone = dto.Phone,
-                ManagerId = dto.ManagerId,
-                Location = dto.Location,
-                Description = dto.Description
+                Name = dto.name,
+                Phone = dto.phone,
+                ManagerId = dto.managerId,
+                Location = dto.location,
+                Description = dto.description
             },
             DtoOperation.Update => new Department()
             {
                 Id = dto.deptId,
-                Name = dto.Name,
-                Phone = dto.Phone,
-                ManagerId = dto.ManagerId,
-                Location = dto.Location,
-                Description = dto.Description
+                Name = dto.name,
+                Phone = dto.phone,
+                ManagerId = dto.managerId,
+                Location = dto.location,
+                Description = dto.description
             },
             _ => throw new NotImplementedException()
         };

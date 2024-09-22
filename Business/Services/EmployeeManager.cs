@@ -38,7 +38,7 @@ namespace Business.Services
             return null!;
         }
 
-        public async Task<IEnumerable<EmployeeGeneralDTO>> GetAllEmployeesWithFilter(Expression<Func<Employee, bool>>? filter)
+        public async Task<IEnumerable<EmployeeGeneralDTO>> GetAllEmployeesWithFilter(Expression<Func<Employee, bool>>? filter = null)
         {
             List<EmployeeGeneralDTO> dtoList = new List<EmployeeGeneralDTO>();
             var emplist =  await _repo.GetAllAsync(filter);

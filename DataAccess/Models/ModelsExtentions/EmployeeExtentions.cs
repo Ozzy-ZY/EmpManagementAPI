@@ -33,7 +33,7 @@ namespace DataAccess.Models.ModelsExtentions
             },
             DtoOperation.Update => new Employee()
             {
-                Id = dto.Id, 
+                Id = dto.employeeId, 
                 FName = dto.firstName,
                 LName = dto.lastName,
                 DepartmentId = dto.departmentId,

@@ -1,4 +1,4 @@
-﻿using Business.DTOs.Department;
+﻿using DataAccess.DTOs.Department;
 using Business.Services;
 using DataAccess.Models;
 using DataAccess.Repo;

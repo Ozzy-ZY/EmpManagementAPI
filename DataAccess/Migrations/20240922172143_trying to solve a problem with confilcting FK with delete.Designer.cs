@@ -4,6 +4,7 @@ using DataAccess.DbConnection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240922172143_trying to solve a problem with confilcting FK with delete")]
+    partial class tryingtosolveaproblemwithconfilctingFKwithdelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -131,7 +134,8 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("DataAccess.Models.Employee", "Manager")
                         .WithOne()
-                        .HasForeignKey("DataAccess.Models.Department", "ManagerId");
+                        .HasForeignKey("DataAccess.Models.Department", "ManagerId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Manager");
                 });

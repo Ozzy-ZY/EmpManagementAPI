@@ -16,23 +16,40 @@ namespace API.Controllers
             _employeeManager = employeeManager;
             _logger = logger;
         }
-        [HttpGet("GetEmployee/{id}")]
+
+        [HttpPost("Add-Employee/")]
+        public async Task<IActionResult> AddEmployee([FromBody] EmployeeGeneralDTO empDto)
+        {
+            return await _employeeManager.AddEmployee(empDto) == false
+                ? BadRequest() : Ok();
+        }
+
+        [HttpPut("Update-Employee/")]
+        public async Task<IActionResult> UpdateEmp([FromBody] EmployeeGeneralDTO dto)
+        {
+            return await _employeeManager.UpdateEmployee(dto) == false
+                ? NotFound() : Ok();
+        }
+
+        [HttpDelete("Delete-Employee/{id}/")]
+        public async Task<IActionResult> DeleteEmployee(int id)
+        {
+            return await _employeeManager.DeleteEmployee(id) == false
+                ? Ok() : NotFound();
+        }
+
+        [HttpGet("Get-Employee/{id}/")]
         public async Task<IActionResult> GetById(int id) 
         {
             return Ok(await _employeeManager.GetEmployee(id));
         }
-        [HttpGet]
+
+        [HttpGet("Get-All-Employees/")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _employeeManager.GetAllEmployeesWithFilter());
         }
-        [HttpPost("AddEmployee/")]
-        public async Task<IActionResult> AddEmployee([FromBody] EmployeeGeneralDTO empDto)
-        {
-            if(await _employeeManager.AddEmployee(empDto))
-                return Ok();
-            return BadRequest();
-        }
+
 
     }
 }

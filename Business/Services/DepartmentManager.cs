@@ -32,7 +32,7 @@ namespace Business.Services
         {
             return await _repo.DeleteAsync(id) != false;
         }
-        public async Task<IEnumerable<DepartmentGeneralDTO>> GetAllDepts(Expression<Func<Department, bool>> filter)
+        public async Task<IEnumerable<DepartmentGeneralDTO>> GetAllDepts(Expression<Func<Department, bool>>? filter = null)
         {
             var dtoList = new List<DepartmentGeneralDTO>();
             var deptlist = await _repo.GetAllAsync(filter);

@@ -51,6 +51,7 @@ namespace Business.Services
 
         public async Task<bool> DeleteEmployee(int id)
         {
+            // if Manager Move Managment to CEO so you update the Department As well
             return await _repo.DeleteAsync(id) != false;
         }
 

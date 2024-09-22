@@ -63,15 +63,12 @@ namespace DataAccess.Repo
 
         public async Task<bool> UpdateAsync(T entity)
         {
-            var temp = await _dbSet.FindAsync(entity);
-            if (temp != null)
-            {
                 _dbSet.Attach(entity);
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return true;
-            }
-            return false;
+        }
+
         }
 
         //public async Task<bool> Add(Employee entity)
@@ -133,4 +130,3 @@ namespace DataAccess.Repo
 
         //}
     }
-}

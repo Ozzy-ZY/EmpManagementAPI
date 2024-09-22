@@ -18,11 +18,36 @@ namespace API.Controllers
             _logger = logger;
             _departmentmanager = departmentmanager;
         }
-        [HttpPost]
+
+        [HttpPost("Add-Department/")]
         public async Task<IActionResult> AddDepartment(DepartmentGeneralDTO DeptDto)
         {
             return await _departmentmanager.AddDept(DeptDto) == false
                 ? BadRequest() : Ok();
+        }
+        [HttpPut("Update-Department/")]
+        public async Task<IActionResult> UpdateDept(DepartmentGeneralDTO dto)
+        {
+            return await _departmentmanager.UpdateDept(dto) == false
+                ? BadRequest() : Ok();
+        }
+        [HttpDelete("Delete-Department/{id}/")]
+        public async Task<IActionResult> DeleteDept(int id)
+        {
+            return await _departmentmanager.DeleteDept(id) == false?
+                BadRequest(id) : Ok();
+        }
+
+        [HttpGet("Get-DepartmentbyId/{id}/")]
+        public async Task<IActionResult> GetDeptById(int id)
+        {
+            return Ok(await _departmentmanager.GetDept(id));
+        }
+
+        [HttpGet("Get-All-Departmets/")]
+        public async Task<IActionResult> GetAllDepts()
+        {
+            return Ok(await _departmentmanager.GetAllDepts());
         }
     }
 }

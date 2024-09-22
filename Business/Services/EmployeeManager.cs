@@ -1,5 +1,6 @@
-﻿using Business.DTOs.Employee;
+﻿using DataAccess.DTOs.Employee;
 using DataAccess.Models;
+using DataAccess.Models.ModelsExtentions;
 using DataAccess.Repo;
 using System;
 using System.Collections.Generic;
@@ -17,54 +18,33 @@ namespace Business.Services
         public EmployeeManager(IRepo<Employee> repo) {
             _repo = repo;
         }
-        public async Task<bool> AddEmployee(EmployeeAddDTO dto)
+        public async Task<bool> AddEmployee(EmployeeGeneralDTO dto)
         {
-            Employee emp = new Employee() {
-                FName = dto.FirstName,
-                LName = dto.LastName,
-                Title = dto.Title,
-                Phone = dto.Phone,
-                Email = dto.Email,
-                DepartmentId = dto.DepartmentId,
-                City = "NewYork",
-                Salary = dto.Salary};
-            return await _repo.AddAsync(emp) != false;
+            return await _repo.AddAsync(dto.AsModel(DtoOperation.Create)) != false;
         }
-        public async Task<bool> UpdateEmployee(EmployeeUpdateDTO dto)
+        public async Task<bool> UpdateEmployee(EmployeeGeneralDTO dto)
         {
-            Employee emp = new Employee()
-            {
-                Id = dto.Id,
-                FName = dto.FirstName,
-                LName = dto.LastName,
-                Title = dto.Title,
-                Phone = dto.Phone,
-                Email = dto.Email,
-                DepartmentId = dto.DepartmentId,
-                City = "NewYork",
-                Salary = dto.Salary,
-                ModifiedAt = DateTime.Now,
-            };
-            return await _repo.UpdateAsync(emp) != false;
+            
+            return await _repo.UpdateAsync(dto.AsModel(DtoOperation.Update)) != false;
         }
-        public async Task<EmployeeGetDTO> GetEmployee(int id)
+        public async Task<EmployeeGeneralDTO> GetEmployee(int id)
         {
             var emp = await _repo.GetAsync(id,"Department");
             if (emp != null)
             {
-                return new EmployeeGetDTO($"{emp.FName} {emp.LName}", emp.Title, emp.DepartmentId);
+                return emp.AsDTO();
             }
 
             return null!;
         }
 
-        public async Task<IEnumerable<EmployeeGetAllDTO>> GetAllEmployeesWithFilter(Expression<Func<Employee, bool>>? filter)
+        public async Task<IEnumerable<EmployeeGeneralDTO>> GetAllEmployeesWithFilter(Expression<Func<Employee, bool>>? filter)
         {
-            List<EmployeeGetAllDTO> dtoList = new List<EmployeeGetAllDTO>();
+            List<EmployeeGeneralDTO> dtoList = new List<EmployeeGeneralDTO>();
             var emplist =  await _repo.GetAllAsync(filter);
             foreach(var emp in emplist)
             {
-                dtoList.Add(new EmployeeGetAllDTO($"{emp.FName} {emp.LName}", emp.Title, emp.Department.Name));
+                dtoList.Add(emp.AsDTO());
             }
             return dtoList;
         }

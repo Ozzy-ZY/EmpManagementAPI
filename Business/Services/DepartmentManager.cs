@@ -1,5 +1,6 @@
-﻿using Business.DTOs.Department;
+﻿using DataAccess.DTOs.Department;
 using DataAccess.Models;
+using DataAccess.Models.ModelsExtentions;
 using DataAccess.Repo;
 using System;
 using System.Collections.Generic;
@@ -19,19 +20,12 @@ namespace Business.Services
         }
         public async Task<bool> AddDept(DepartmentGeneralDTO dto)
         {
-            Department department = new Department()
-            {
-                Name = dto.Name,
-                Description = dto.Description,
-                ManagerId = dto.ManagerId,
-                Phone = dto.Phone,
-                Location = dto.Location,
-            };
+            Department department = dto.AsModel(DtoOperation.Create);
             return await _repo.AddAsync(department);
         }
         public async Task<bool> UpdateDept(DepartmentGeneralDTO dto)
         {
-            var dept = new Department() { Name = dto.Name, Description = dto.Description, ManagerId = dto.ManagerId, };
+            var dept = dto.AsModel(DtoOperation.Update);
             return await _repo.UpdateAsync(dept) != false;
         }
         public async Task<bool> DeleteDept(int id)
@@ -45,28 +39,14 @@ namespace Business.Services
             // string name, string phone, int managerId,  string description = null!, string location = null!
             foreach (var dept in deptlist)
             {
-                var dep = new DepartmentGeneralDTO()
-                { Name = dept.Name,
-                    Phone =  dept.Phone,
-                    ManagerId = dept.ManagerId,
-                    Description = dept.Description,
-                    Location =  dept.Location 
-                };
-                dtoList.Add(dep);
+                dtoList.Add(dept.AsDTO());
             }
             return dtoList;
         }
         public async Task<DepartmentGeneralDTO> GetDept(int id)
         {
             var dept = await _repo.GetAsync(id);
-            return new DepartmentGeneralDTO()
-            {
-                Name = dept.Name,
-                Phone = dept.Phone,
-                ManagerId = dept.ManagerId,
-                Description = dept.Description,
-                Location = dept.Location
-            };
+            return dept.AsDTO();
         }
     }
 }

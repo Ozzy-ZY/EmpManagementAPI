@@ -18,12 +18,13 @@ namespace DataAccess.Models.ModelConfig
             builder.Property(d => d.Location).HasDefaultValue("New York");
             builder.Property(d => d.Phone).IsRequired().HasMaxLength(50);
             builder.Property(d => d.CreatedAt).HasDefaultValueSql("GETDATE()");
-            
-            // One-to-One relationship with Manager (Employee)
-            builder.HasOne(d => d.Manager)
-                  .WithOne() // No navigation property from Employee to Manager
-                  .HasForeignKey<Department>(d => d.ManagerId).IsRequired(false)
-                  .OnDelete(DeleteBehavior.Restrict); // Manager must not be deleted if the Department is deleted
+
+            // One-to-One relationship with Manager (Employee) Optional
+            builder
+                .HasOne(d=> d.Manager)
+                .WithMany()
+                .HasForeignKey(d => d.ManagerId)
+                .IsRequired(false);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Business.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
@@ -44,6 +45,7 @@ namespace API.Controllers
             return Ok(await _employeeManager.GetEmployee(id));
         }
 
+        [Authorize]
         [HttpGet("Get-All-Employees/")]
         public async Task<IActionResult> GetAll()
         {

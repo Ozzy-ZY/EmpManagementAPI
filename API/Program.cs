@@ -5,9 +5,13 @@ using DataAccess.Models;
 using API.Controllers;
 using DataAccess.Repo;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddControllers().AddJsonOptions(options => 
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
@@ -34,11 +38,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+app.MapIdentityApi<IdentityUser>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    //app.MapSwagger().RequireAuthorization();
 }
 
 app.UseCors("CorsPolicy");
